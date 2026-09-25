@@ -4,43 +4,444 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Как я провела Лето! Version 2.0</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --sun: #ffb703;
+            --sun-dark: #fb8500;
+            --sea: #219ebc;
+            --sea-dark: #023047;
+            --sky: #e8f4f8;
+            --text: #1d2b36;
+            --white: #ffffff;
+            --radius: 16px;
+            --shadow: 0 10px 30px rgba(2, 48, 71, 0.12);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text);
+            background: var(--sky);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1140px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* ===== Шапка ===== */
+        .site-header {
+            background: linear-gradient(135deg, var(--sea-dark), var(--sea));
+            color: var(--white);
+            padding: 18px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 20px rgba(2, 48, 71, 0.2);
+        }
+
+        .site-header .container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .site-header > .container > a {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: var(--white);
+            font-size: 1.25rem;
+            font-weight: 700;
+            letter-spacing: 0.3px;
+            cursor: pointer;
+        }
+
+        .logo-icon {
+            font-size: 1.6rem;
+            line-height: 1;
+            animation: spin-slow 12s linear infinite;
+            display: inline-block;
+        }
+
+        @keyframes spin-slow {
+            to { transform: rotate(360deg); }
+        }
+
+        .logo-text {
+            background: linear-gradient(90deg, #fff, var(--sun));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .main-nav ul {
+            display: flex;
+            list-style: none;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .main-nav a {
+            display: inline-block;
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 600;
+            padding: 9px 16px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            transition: all 0.25s ease;
+            white-space: nowrap;
+        }
+
+        .main-nav a:hover,
+        .main-nav a:focus-visible {
+            background: var(--sun);
+            border-color: var(--sun);
+            color: var(--sea-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(255, 183, 3, 0.4);
+            outline: none;
+        }
+
+        /* ===== Герой-секция ===== */
+        .hero {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 90px 24px;
+            position: relative;
+            overflow: hidden;
+            background:
+                radial-gradient(circle at 15% 20%, rgba(255, 183, 3, 0.25), transparent 45%),
+                radial-gradient(circle at 85% 80%, rgba(33, 158, 188, 0.25), transparent 45%),
+                linear-gradient(180deg, #f7fbfd 0%, var(--sky) 100%);
+        }
+
+        .hero::before,
+        .hero::after {
+            content: "";
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.35;
+            pointer-events: none;
+        }
+
+        .hero::before {
+            width: 260px;
+            height: 260px;
+            background: var(--sun);
+            top: -80px;
+            right: -60px;
+            filter: blur(60px);
+        }
+
+        .hero::after {
+            width: 320px;
+            height: 320px;
+            background: var(--sea);
+            bottom: -120px;
+            left: -80px;
+            filter: blur(70px);
+        }
+
+        .hero h1 {
+            position: relative;
+            font-size: clamp(2rem, 6vw, 3.6rem);
+            font-weight: 800;
+            line-height: 1.15;
+            color: var(--sea-dark);
+            margin-bottom: 18px;
+            animation: fade-up 0.8s ease both;
+        }
+
+        .hero h1::after {
+            content: "";
+            display: block;
+            width: 90px;
+            height: 6px;
+            margin: 18px auto 0;
+            border-radius: 999px;
+            background: linear-gradient(90deg, var(--sun), var(--sun-dark));
+        }
+
+        .hero p {
+            position: relative;
+            font-size: clamp(1rem, 2.2vw, 1.3rem);
+            color: #3d5460;
+            max-width: 560px;
+            animation: fade-up 0.8s ease 0.15s both;
+        }
+
+        @keyframes fade-up {
+            from { opacity: 0; transform: translateY(24px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ===== Секции с контентом ===== */
+        .section {
+            padding: 70px 0;
+        }
+
+        .section:nth-child(even) {
+            background: #ffffff;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: clamp(1.6rem, 4vw, 2.4rem);
+            color: var(--sea-dark);
+            margin-bottom: 12px;
+            font-weight: 800;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: #5c7280;
+            margin-bottom: 44px;
+            font-size: 1.05rem;
+        }
+
+        /* Сетка медиа: видео + 2 фото */
+        .media-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+        }
+
+        .media-card {
+            background: var(--white);
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .media-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 18px 40px rgba(2, 48, 71, 0.18);
+        }
+
+        .media-card video,
+        .media-card img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            display: block;
+            background: #d9e8ee;
+        }
+
+        .media-caption {
+            padding: 14px 18px;
+            font-size: 0.95rem;
+            color: var(--sea-dark);
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .media-card.video-card {
+            grid-column: span 1;
+        }
+
+        footer {
+            background: var(--sea-dark);
+            color: rgba(255, 255, 255, 0.85);
+            text-align: center;
+            padding: 22px 16px;
+            font-size: 0.95rem;
+        }
+
+        footer p {
+            margin: 0;
+        }
+
+        @media (max-width: 768px) {
+            .section {
+                padding: 50px 0;
+            }
+
+            .media-card video,
+            .media-card img {
+                height: 200px;
+            }
+        }
+
+        @media (max-width: 560px) {
+            .site-header .container {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .main-nav ul {
+                width: 100%;
+            }
+
+            .main-nav a {
+                padding: 8px 12px;
+                font-size: 0.9rem;
+            }
+
+            .hero {
+                padding: 60px 20px;
+            }
+
+            .media-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .media-card video,
+            .media-card img {
+                height: 180px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+        }
+    </style>
 </head>
 <body>
     <header class="site-header">
         <div class="container">
-            <a>
+            <a href="#">
                 <span class="logo-icon">🌞</span>
                 <span class="logo-text">Моё лето 2026</span>
             </a>
 
             <!-- Меню -->
-            <nav class="main-nav">
+            <nav class="main-nav" aria-label="Основная навигация">
                 <ul>
                     <li><a href="#sea">🏖️ Море</a></li>
                     <li><a href="#friends">🎉 Друзья</a></li>
-                    <li><a href="#gallery">📸 Галерея</a></li>
+                    <li><a href="#sunset">🌅 Закаты</a></li>
                 </ul>
             </nav>
-
-           
         </div>
     </header>
 
     <main>
+        <!-- Герой -->
         <section class="hero">
             <h1>Как я провела лето ☀️</h1>
             <p>Три месяца приключений, тепла и ярких воспоминаний</p>
         </section>
+
+        <!-- Море -->
+        <section class="section" id="sea">
+            <div class="container">
+                <h2 class="section-title">🏖️ Море</h2>
+                <p class="section-subtitle">Тёплые волны, солёный воздух и бесконечный горизонт</p>
+
+                <div class="media-grid">
+                    <div class="media-card video-card">
+                        <video controls preload="metadata">
+                            <source src="photo/sea3.mp4" type="video/mp4">
+                            Ваш браузер не поддерживает видео.
+                        </video>
+                        <p class="media-caption">🎬 Видео:</p>
+                    </div>
+
+                    <div class="media-card">
+                        <img src="photo/sea1.jpg" alt=>
+                        <p class="media-caption">📷 Фото: </p>
+                    </div>
+
+                    <div class="media-card">
+                        <img src="photo/sea2.jpg" alt=>
+                        <p class="media-caption">📷 Фото:</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Друзья -->
+        <section class="section" id="friends">
+            <div class="container">
+                <h2 class="section-title">🎉 Друзья</h2>
+                <p class="section-subtitle">Самые тёплые вечера — в кругу близких людей</p>
+
+                <div class="media-grid">
+                    <div class="media-card video-card">
+                        <video controls preload="metadata">
+                            <source src="photo/friends3.mp4" type="video/mp4">
+                            Ваш браузер не поддерживает видео.
+                        </video>
+                        <p class="media-caption">🎬 Видео: </p>
+                    </div>
+
+                    <div class="media-card">
+                        <img src="photo/friends1.jpg" alt="Друзья вместе смеются">
+                        <p class="media-caption">📷 Фото:</p>
+                    </div>
+
+                    <div class="media-card">
+                        <img src="photo/friends2.jpg" alt="Компания друзей на природе">
+                        <p class="media-caption">📷 Фото:</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Закаты -->
+        <section class="section" id="sunset">
+            <div class="container">
+                <h2 class="section-title">🌅 Закаты</h2>
+                <p class="section-subtitle">Небо, которое каждый вечер рисовало новые картины</p>
+
+                <div class="media-grid">
+                    <div class="media-card video-card">
+                        <video controls preload="metadata">
+                            <source src="photo/sunset3.MOV" type="video/mp4">
+                            Ваш браузер не поддерживает видео.
+                        </video>
+                        <p class="media-caption">🎬 Видео:</p>
+                    </div>
+
+                    <div class="media-card">
+                        <img src="photo/sunset1.jpg" alt="Оранжевый закат над водой">
+                        <p class="media-caption">📷 Фото: </p>
+                    </div>
+
+                    <div class="media-card">
+                        <img src="photo/sunset2.jpg">
+                        <p class="media-caption">📷 Фото: </p>
+                    </div>
+                </div>
+            </div>
+        </section>
     </main>
 
     <footer>
-        <p>&copy; 2026 Моё лето.</p>
+        <p>2026 Моё лето.</p>
     </footer>
-
-</body>
-</html>
-
-    </footer>
->>>>>>> feature/header
 </body>
 </html>
